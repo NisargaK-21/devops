@@ -1,72 +1,87 @@
 function calculateAverage(marks) {
-  if (!Array.isArray(marks) || marks.length === 0) {
-    return 0;
-  }
+    const validMarks = marks.filter(
+        mark => typeof mark === "number" && mark >= 0 && mark <= 100
+    );
 
-  const validMarks = marks.filter(
-    (mark) => typeof mark === "number" && mark >= 0 && mark <= 100
-  );
+    if (validMarks.length === 0) {
+        return 0;
+    }
 
-  if (validMarks.length === 0) {
-    return 0;
-  }
+    const total = validMarks.reduce((sum, mark) => sum + mark, 0);
 
-  const total = validMarks.reduce((sum, mark) => sum + mark, 0);
-
-  return Number((total / validMarks.length).toFixed(2));
+    return total / validMarks.length;
 }
+
 
 function getGrade(average) {
-  if (average >= 90) {
-    return "A";
-  }
+    if (average >= 90) {
+        return "A";
+    }
 
-  if (average >= 75) {
-    return "B";
-  }
+    if (average >= 75) {
+        return "B";
+    }
 
-  if (average >= 60) {
-    return "C";
-  }
+    if (average >= 60) {
+        return "C";
+    }
 
-  if (average >= 40) {
-    return "D";
-  }
+    if (average >= 40) {
+        return "D";
+    }
 
-  return "F";
+    return "F";
 }
+
 
 function analyzeStudent(student) {
-  if (!student || typeof student !== "object") {
-    throw new Error("Invalid student");
-  }
+    if (
+        !student ||
+        typeof student !== "object" ||
+        !student.name ||
+        !Array.isArray(student.marks)
+    ) {
+        throw new Error("Invalid student data");
+    }
 
-  const average = calculateAverage(student.marks);
+    const average = calculateAverage(student.marks);
+    const grade = getGrade(average);
 
-  return {
-    name: student.name,
-    average,
-    grade: getGrade(average),
-    passed: average >= 40,
-  };
+    return {
+        id: student.id,
+        name: student.name,
+        marks: student.marks,
+        average: average,
+        grade: grade,
+        passed: average >= 40
+    };
 }
+
 
 function findTopStudent(students) {
-  if (!Array.isArray(students) || students.length === 0) {
-    return null;
-  }
+    if (!students || students.length === 0) {
+        return null;
+    }
 
-  return students.reduce((top, current) => {
-    const topAverage = calculateAverage(top.marks);
-    const currentAverage = calculateAverage(current.marks);
+    let topStudent = students[0];
+    let topAverage = calculateAverage(topStudent.marks);
 
-    return currentAverage > topAverage ? current : top;
-  });
+    for (let i = 1; i < students.length; i++) {
+        const currentAverage = calculateAverage(students[i].marks);
+
+        if (currentAverage > topAverage) {
+            topAverage = currentAverage;
+            topStudent = students[i];
+        }
+    }
+
+    return topStudent;
 }
 
+
 module.exports = {
-  calculateAverage,
-  getGrade,
-  analyzeStudent,
-  findTopStudent,
+    calculateAverage,
+    getGrade,
+    analyzeStudent,
+    findTopStudent
 };
