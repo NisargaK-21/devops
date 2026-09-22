@@ -7,45 +7,45 @@ const {
 
 describe("calculateAverage", () => {
   test("should calculate average of valid marks", () => {
-    // TODO
+    expect(calculateAverage([80, 90, 70])).toBe(80);
   });
 
   test("should return 0 for an empty array", () => {
-    // TODO
+    expect(calculateAverage([])).toBe(0);
   });
 
   test("should ignore invalid marks", () => {
-    // TODO
+    expect(calculateAverage([80, 90, 70, -10, 110])).toBe(80);
   });
 
   test("should return 0 when all marks are invalid", () => {
-    // TODO
+    expect(calculateAverage([-10, 110, -50, 150])).toBe(0);
   });
 
   test("should handle decimal averages", () => {
-    // TODO
+    expect(calculateAverage([80.5, 90.5, 70.5])).toBeCloseTo(80.5);
   });
 });
 
 describe("getGrade", () => {
   test("should return A for average >= 90", () => {
-    // TODO
+    expect(getGrade(95)).toBe("A");
   });
 
   test("should return B for average between 75 and 89", () => {
-    // TODO
+    expect(getGrade(80)).toBe("B");
   });
 
   test("should return C for average between 60 and 74", () => {
-    // TODO
+    expect(getGrade(65)).toBe("C");
   });
 
   test("should return D for average between 40 and 59", () => {
-    // TODO
+    expect(getGrade(45)).toBe("D");
   });
 
   test("should return F for average below 40", () => {
-    // TODO
+    expect(getGrade(30)).toBe("F");
   });
 });
 
