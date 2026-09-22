@@ -4,25 +4,27 @@ on:
   push:
     branches:
       - "**"
-    pull_request:
-      branches:
-        - main
+
+  pull_request:
+    branches:
+      - main
 
 jobs:
-   test:
-       runs-on : ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-       steps:
-           - name:Checkout code
-             uses: actions/checkout@v4
-           - name: Setup Node.js
-             uses: actions/setup-node@v3
-             with:
-               node-version: 20
-               chache: npm
-            - name: Install dependencies
-              uses: npm install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
 
-            - name: Run Automation tests
-              run: npm run test
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Automation tests
+        run: npm run test
