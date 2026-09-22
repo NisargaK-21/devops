@@ -13,14 +13,12 @@ describe("Order feature of the application", () => {
         expect(result.order).toBeDefined();
     });
 
-
     test("Empty cart should return success false and order null", () => {
         const result = createOrder([]);
 
         expect(result.success).toBeFalsy();
         expect(result.order).toBeNull();
     });
-
 
     test("Order total should be calculated correctly", () => {
         const items = [
@@ -30,9 +28,9 @@ describe("Order feature of the application", () => {
 
         const result = createOrder(items);
 
-        expect(result.order.total).toEqual(505);
+        // 100 × 2 + 200 × 3 = 800
+        expect(result.order.total).toEqual(800);
     });
-
 
     test("SAVE10 coupon should apply a 10% discount", () => {
         const items = [
@@ -41,11 +39,12 @@ describe("Order feature of the application", () => {
 
         const result = createOrder(items, "SAVE10");
 
-        expect(result.order.total).toEqual(91.8);
+        // 100 × 2 = 200
+        // 10% discount = 180
+        expect(result.order.total).toEqual(180);
     });
 
-
-    test("When no coupon is provided, coupon should be null", () => {
+    test("When no coupon is provided, coupon should be undefined", () => {
         const items = [
             { name: "Medicine", price: 100, quantity: 2 }
         ];
@@ -55,7 +54,6 @@ describe("Order feature of the application", () => {
         expect(result.order.coupon).toBeUndefined();
     });
 
-    
     test('An order above 1000 should have status "PREMIUM"', () => {
         const order = {
             total: 1500

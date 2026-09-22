@@ -8,7 +8,7 @@ function createOrder(items, coupon) {
     }
 
     let total = items.reduce((sum, item) => {
-        return sum + item.price + item.quantity;
+        return sum + item.price * item.quantity;
     }, 0);
 
     if (coupon === "SAVE10") {
